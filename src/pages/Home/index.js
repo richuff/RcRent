@@ -1,49 +1,51 @@
-import { Outlet } from "react-router-dom"
+import { Outlet ,useNavigate} from "react-router-dom"
 import { Badge, TabBar } from "antd-mobile"
 import {
     AppOutline,
     MessageOutline,
     MessageFill,
-    UnorderedListOutline,
+    EnvironmentOutline,
     UserOutline,
+    
 } from 'antd-mobile-icons'
+
 export default function CityList() {
+    const navigate = useNavigate()
     const tabs = [
         {
-            key: 'home',
+            key: '/',
             title: '首页',
             icon: <AppOutline />,
             badge: Badge.dot,
         },
         {
-            key: 'todo',
-            title: '待办',
-            icon: <UnorderedListOutline />,
+            key: '/houselist',
+            title: '找房',
+            icon: <EnvironmentOutline />,
             badge: '5',
         },
         {
-            key: 'message',
-            title: '消息',
+            key: '/news',
+            title: '资讯',
             icon: (active) =>
                 active ? <MessageFill /> : <MessageOutline />,
             badge: '99+',
         },
         {
-            key: 'personalCenter',
+            key: '/profile',
             title: '我的',
             icon: <UserOutline />,
         },
     ]
-
+    const routeLink = (value)=>{
+        navigate(value)
+    }
     return (
         <div>
-            <span>首页</span>
             <Outlet></Outlet>
-            <TabBar style={{width:"390px",position: "absolute",bottom:"0",borderTop:"solid 1px blue",borderBottom:"solid 1px blue"}}>
+            <TabBar onChange={value=>routeLink(value)} style={{width:"100%",position:"fixed",bottom:"0",borderTop:"solid 1px blue",borderBottom:"solid 1px blue"}}>
                 {tabs.map(item => (
-                    <TabBar.Item key={item.key} icon={item.icon} title={item.title} badge={item.badge} 
-                    
-                    />
+                    <TabBar.Item key={item.key} icon={item.icon} title={item.title} badge={item.badge} />
                 ))}
             </TabBar>
         </div>
