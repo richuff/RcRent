@@ -1,0 +1,25 @@
+.group{
+    display: flex;
+    justify-content: space-between;
+    background-color: #ededed;
+    height: 30px;
+    .text{
+        margin-left: 10px;
+        line-height: 30px;
+        font-size: 12px;
+    }
+    .more{
+        margin-right: 10px;
+        line-height: 30px;
+        font-size: 12px;
+    }
+}
+
+.groupdetail{
+
+    .groupimg{
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+    }
+}
