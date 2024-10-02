@@ -1,10 +1,11 @@
-import { Swiper,Skeleton,Card } from "antd-mobile"
+import { Swiper,Skeleton } from "antd-mobile"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { TabBar,Grid } from "antd-mobile"
 import {ShopbagOutline,TeamOutline,CompassOutline,LocationOutline} from 'antd-mobile-icons'
 import './index.scss'
+import NewsList from "../../components/IndexPage/newsList"
 
 export default function HomePage(){
     const [imageList,setImageList] = useState([])
@@ -82,7 +83,7 @@ export default function HomePage(){
             <Skeleton.Title />
             <Skeleton.Paragraph />
             </div>: 
-            group.groups.map(item=>(<div className="groupdetail">
+            group.groups.map(item=>(<div className="groupdetail" key={item.id}>
             <div className="groupdesc">
               <div className="title">{item.title}</div>
               <div className="desc">{item.desc}</div>
@@ -91,20 +92,7 @@ export default function HomePage(){
           </div>)
             )}
         </Grid>
-        <div className="news">
-            <h3 style={{fontSize:"13px",marginLeft:"10px",marginTop:"6px"}}>最新资讯</h3>
-            <div className="new" width="100%">
-              <img className="img" src="https://s.cn.bing.net/th?id=OHR.ConnecticutBridge_ZH-CN4957862425_UHD.jpg"/>
-              <div className="details">
-                <h4 className="newtitle">最新</h4>
-                <div className="message">
-                  <div className="author">richu</div>
-                  <div className="time">1天前</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
+            <NewsList></NewsList>
         </div>
     )
 }
