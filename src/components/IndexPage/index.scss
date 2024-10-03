@@ -1,0 +1,31 @@
+$newImgWidth : 140px;
+
+.news{
+    width: 100vw;
+    margin-bottom: 50px;
+    .new{
+        width: 100vw;
+        display: flex;
+        margin-top: 10px;
+        .img{
+            margin-left: 12px;
+            width: 80px;
+            height: 80px;
+        }
+        .details{
+            width: calc(100vw - $newImgWidth);
+            margin-left: 20px;
+            .message{
+                margin-top: 40px;
+                display: flex;
+                justify-content: space-between;
+                font-size: small;
+                color: #888;
+            }
+            .newtitle{
+                text-align: left;
+                line-height: 100%;
+            }
+        }
+    }
+}

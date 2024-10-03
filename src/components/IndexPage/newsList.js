@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
+import './index.scss'
 
 export default function NewsList() {
     const [newList, setNewsList] = useState([])

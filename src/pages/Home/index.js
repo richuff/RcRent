@@ -43,7 +43,7 @@ export default function CityList() {
     return (
         <div>
             <Outlet></Outlet>
-            <TabBar onChange={value=>routeLink(value)} style={{width:"100%",position:"fixed",bottom:"0",borderTop:"solid 1px blue",borderBottom:"solid 1px blue"}}>
+            <TabBar onChange={value=>routeLink(value)} style={{width:"100%",position:"fixed",bottom:"0",borderTop:"solid 1px blue",borderBottom:"solid 1px blue",backgroundColor:"white"}}>
                 {tabs.map(item => (
                     <TabBar.Item key={item.key} icon={item.icon} title={item.title} badge={item.badge} />
                 ))}
