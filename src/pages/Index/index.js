@@ -1,8 +1,7 @@
-import { Swiper, Skeleton, SearchBar } from "antd-mobile"
+import { Swiper, Skeleton, SearchBar,TabBar, Grid } from "antd-mobile"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { TabBar, Grid } from "antd-mobile"
 import { ShopbagOutline, TeamOutline, CompassOutline, LocationOutline, LocationFill, DownFill } from 'antd-mobile-icons'
 import './index.scss'
 import NewsList from "../../components/IndexPage/newsList"
@@ -10,13 +9,23 @@ import NewsList from "../../components/IndexPage/newsList"
 export default function HomePage() {
   const [imageList, setImageList] = useState([])
   const [group, setGroup] = useState({})
+  const [location,setLocation] = useState("")
   useEffect(() => {
     const getSwipers = async () => {
       const res = await axios.get("http://localhost:8080/home/swiper")
       setImageList(res.data.body)
     }
     getSwipers()
-  }, [setImageList])
+    const getLocation = async () => {
+      const locate = await axios.get("https://restapi.amap.com/v3/ip",{
+        params:{
+          key:"fb6fd65b71f26f6774c08e0ad7574ecc"
+        }
+      })
+      setLocation(locate.data.city)
+    }
+    getLocation()
+  }, [setImageList,setLocation])
   useEffect(() => {
     const getRentGroup = async () => {
       const res = await axios.get("http://localhost:8080/home/groups", {
@@ -69,7 +78,7 @@ export default function HomePage() {
   return (
     <div className="navigatebar">
       <div className="topSearch">
-        <div className="SelectSearch" onClick={() => navigate('/cityList')}>上海
+        <div className="SelectSearch" onClick={() => navigate('/cityList')}>{location}
           <DownFill style={{marginLeft:"4px"}}/>
         </div>
         <SearchBar placeholder='请输入内容' className="searchButton" />
