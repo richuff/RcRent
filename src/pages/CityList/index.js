@@ -1,17 +1,39 @@
 import { NavBar,Space } from "antd-mobile"
 import {SearchOutline,LeftOutline} from 'antd-mobile-icons'
 import { useNavigate } from "react-router-dom"
-import axios from "axios"
 import { useEffect } from "react"
+import { fetchCityList } from "../../stores/City"
+import { useDispatch, useSelector } from "react-redux"
 
-export default function MapContainer() {
+const formatData = (list)=>{
+  const cityList = []
+  let cityIndex = []
+
+  list.forEach(ele => {
+    const first = ele.short.substr(0,1)
+    if (cityList[first]){
+      cityList[first].push(ele)
+    }else{
+      cityList[first] = [ele]
+      cityIndex.push(first)
+    }
+  });
+  cityIndex = cityIndex.sort()
+  return {
+    cityIndex,
+    cityList
+  }
+}
+
+export default function CityList() {
+  const dispatch = useDispatch()
     useEffect(()=>{
-      const getCityList = async ()=>{
-        const res = await axios.get(`http://localhost:8080/area/city?level=1`)
-        console.log(res.data.body)
-      }
-      getCityList()
-    },[])
+      dispatch(fetchCityList())
+    },[dispatch])
+
+    const {CList} = useSelector(state=>state.CityList)
+    formatData(CList)
+
     const navigate = useNavigate()
     const right = (
       <div style={{ fontSize: 20 }}>
