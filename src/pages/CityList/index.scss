@@ -1,7 +1,46 @@
-.citylist{
+.citylist {
     height: 100vh;
     padding-top: 45px;
-    .cityList{
-        
+
+    .cityLists {
+        height: 20px;
     }
+    .index{
+        font-size: 1.4em;
+    }
+    .city {
+        margin-top: 6px;
+        .name {
+            margin-bottom: 10px;
+            margin-top: 10px;
+            padding-left: 30px;
+            font-size: 1.2em;
+            padding-top: 10px;
+            border-top: 1px solid black;
+        }
+    }
+}
+.city:last-child{
+    border-bottom: 1px solid black;
+}
+
+.cityIndex{
+    position: fixed;
+    right: 0;
+    top: 40;
+    font-size: 16px;
+    margin-right: 6px;
+    list-style-type: none;
+    .cityItem{
+        .cityActived{
+            text-align: center;
+            display: block;
+            margin-top: 10px;
+        }
+        .cityActive{
+            border-radius: 50%;
+            background-color: aqua;
+        }
+    }
+
 }

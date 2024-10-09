@@ -70,14 +70,21 @@ export default function CityLists() {
         return letter.toUpperCase()
     }
   }
-
+  const getrowheight = ({index})=>{
+    return 50 + cityList[cityIndex[index]].length * 40
+  }
+  const [NIndex,setnIndex] = useState("#")
   return (
     <div className="citylist">
       <NavBar style={{ marginTop: "-45px" }} right={right} backIcon={<LeftOutline style={{ fontSize: "20" }} onClick={() => navigate(-1)} />}>
         城市列表
       </NavBar>
       {/* 可视区域渲染  react-virtualized*/}
-
+      <ul className="cityIndex">
+        <li className="cityItem">
+          {cityIndex.map(item=><span className={item === NIndex? "cityActived cityActive" : "cityActived"}>{item === "hot" ? "热" : item}</span>)}
+        </li>
+      </ul>
       <AutoSizer>
         {({ height, width }) => (
           <List
@@ -88,7 +95,7 @@ export default function CityLists() {
             // 总共个数
             rowCount={cityIndex.length}
             // cell高度
-            rowHeight={50}
+            rowHeight={getrowheight}
             style={{ outline: "none", }}
             rowRenderer={({ key, index, isScrolling, style }) => {
               const letter = cityIndex[index]
