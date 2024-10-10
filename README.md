@@ -6,9 +6,11 @@ RcRent
 this is a app which can help you to find the nearest rents
 
 ## Get started with RcRent
-npm i                        `you may need the nodejs`
+npm i `you may need the nodejs`
 
 npm run start
+> This project's dependencies
+> react-virtualized react-router-dom react-dom axios antd-mobile
 
 ## Building and Contributing
 >join me with email 1691401076@qq.com
