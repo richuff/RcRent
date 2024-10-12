@@ -1,7 +1,7 @@
 import { NavBar, Space } from "antd-mobile"
 import { SearchOutline, LeftOutline } from 'antd-mobile-icons'
 import { useNavigate } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { fetchCityList } from "../../stores/City"
 import { useDispatch, useSelector } from "react-redux"
 import axios from "axios"
@@ -30,6 +30,7 @@ const formatData = (list) => {
 }
 
 export default function CityLists() {
+  const ListViews = useRef(null)
   const [hotList, setHotList] = useState([])
   const [city, setCity] = useState("")
   const dispatch = useDispatch()
@@ -74,20 +75,36 @@ export default function CityLists() {
     return 50 + cityList[cityIndex[index]].length * 40
   }
   const [NIndex,setnIndex] = useState("#")
+  const [flag,setFlag] =useState(true)
+  const render = ({startIndex})=>{
+    if (flag && NIndex !== cityIndex[startIndex]){
+      setnIndex(cityIndex[startIndex])
+    }
+    ListViews.current.measureAllRows()
+  }
+  
   return (
     <div className="citylist">
       <NavBar style={{ marginTop: "-45px" }} right={right} backIcon={<LeftOutline style={{ fontSize: "20" }} onClick={() => navigate(-1)} />}>
         城市列表
       </NavBar>
       {/* 可视区域渲染  react-virtualized*/}
-      <ul className="cityIndex">
+      <ul className="cityIndex" >
         <li className="cityItem">
-          {cityIndex.map(item=><span className={item === NIndex? "cityActived cityActive" : "cityActived"}>{item === "hot" ? "热" : item}</span>)}
+          {cityIndex.map((item,index)=><span className={item === NIndex? "cityActived cityActive" : "cityActived"} onClick={()=>{
+            setFlag(false)
+            setnIndex(item)
+            ListViews.current.scrollToRow(index)
+            setTimeout(()=>{
+              setFlag(true)
+            },500)
+          }}>{item === "hot" ? "热" : item}</span>)}
         </li>
       </ul>
       <AutoSizer>
         {({ height, width }) => (
           <List
+            ref={ListViews}
             // 窗口的高度,必填
             height={height}
             // 窗口的宽度,必填
@@ -96,6 +113,9 @@ export default function CityLists() {
             rowCount={cityIndex.length}
             // cell高度
             rowHeight={getrowheight}
+            // render
+            onRowsRendered={render}
+            scrollToAlignment="start"
             style={{ outline: "none", }}
             rowRenderer={({ key, index, isScrolling, style }) => {
               const letter = cityIndex[index]
