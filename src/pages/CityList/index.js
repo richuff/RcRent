@@ -1,4 +1,4 @@
-import { NavBar, Space } from "antd-mobile"
+import { NavBar, Space, Toast } from "antd-mobile"
 import { SearchOutline, LeftOutline } from 'antd-mobile-icons'
 import { useNavigate } from "react-router-dom"
 import { useEffect, useRef, useState } from "react"
@@ -10,6 +10,8 @@ import { AutoSizer, List } from "react-virtualized"
 import './index.scss'
 
 const formatData = (list) => {
+  
+
   const cityList = []
   let cityIndex = []
 
@@ -21,7 +23,7 @@ const formatData = (list) => {
       cityList[first] = [ele]
       cityIndex.push(first)
     }
-  });
+  })
   cityIndex = cityIndex.sort()
   return {
     cityIndex,
@@ -30,6 +32,7 @@ const formatData = (list) => {
 }
 
 export default function CityLists() {
+
   const ListViews = useRef(null)
   const [hotList, setHotList] = useState([])
   const [city, setCity] = useState("")
@@ -46,7 +49,6 @@ export default function CityLists() {
     getCurrentCity().then((value) => {
       setCity(value)
     })
-    
   }, [dispatch, setCity])
   cityIndex.unshift('hot')
   cityIndex.unshift('#')
@@ -81,6 +83,18 @@ export default function CityLists() {
       setnIndex(cityIndex[startIndex])
     }
     ListViews.current.measureAllRows()
+  }
+  const HaveList = ["北京","上海","深圳","广州"]
+  const changeCitys = ({label,value})=>{
+      if (HaveList.indexOf(label) > -1){
+        localStorage.setItem("rczf_citys",JSON.stringify({label,value}))
+        navigate(-1)
+      }else{
+        Toast.show({
+          icon: 'fail',
+          content: '该区域没有房源',
+        })
+      }
   }
   
   return (
@@ -121,8 +135,8 @@ export default function CityLists() {
               const letter = cityIndex[index]
               return (<div key={key} style={style} className="cityList">
                 <div className="index" key={key}>{handleIndex(letter)}</div>
-                <div className="city">{cityList[letter] == null ? <div>loading</div> : 
-                  cityList[letter].map(item => <div className="name" key={item.value}>
+                <div className="city" >{cityList[letter] == null ? <div>loading</div> : 
+                  cityList[letter].map(item => <div className="name" key={item.value} onClick={()=>changeCitys(item)}>
                     {item.label}
                   </div>
                   )
