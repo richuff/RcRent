@@ -5,6 +5,7 @@ import News from "../pages/News";
 import Profile from "../pages/Profile";
 import HouseList from "../pages/Houselist";
 import HomePage from "../pages/Index";
+import Maps from "../pages/Maps";
 const router = createBrowserRouter([
     {
         path:"/",
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
         path:"/cityList",
         element:<CityList/>
     },
+    {
+        path:"/map",
+        element:<Maps/>
+    }
 ])
 
 export default router

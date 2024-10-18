@@ -40,28 +40,48 @@ export default function HomePage() {
     }
     getRentGroup()
   }, [setGroup])
+  
   const tabs = [
     {
       key: 'totalrent',
       title: '整租',
       icon: <ShopbagOutline />,
+      onclick:(key)=>{
+        setSelectedTab(key)
+        console.log("去出租")
+      }
     },
     {
       key: 'withrent',
       title: '合租',
-      icon: <TeamOutline />
+      icon: <TeamOutline />,
+      onclick:(key)=>{
+        setSelectedTab(key)
+        console.log("去出租")
+      }
     },
     {
       key: 'findrent',
       title: '地图找房',
-      icon: <CompassOutline />
+      icon: <CompassOutline />,
+      onclick:(key)=>{
+        setSelectedTab(key)
+        console.log("去出租")
+      }
     },
     {
       key: 'torent',
       title: '去出租',
       icon: <LocationOutline />,
+      isActive:false,
+      onclick:(key)=>{
+        
+        setSelectedTab(key)
+        console.log("去出租")
+      }
     },
   ]
+  const [selectedTab, setSelectedTab] = useState(tabs[0].key);
   const navigate = useNavigate()
   const items = imageList.map(image => (
     <Swiper.Item key={image.id} style={{ backgroundColor: "white" }}>
@@ -87,7 +107,7 @@ export default function HomePage() {
       <Swiper autoplay loop={true}>{items}</Swiper>
       <TabBar style={{ marginTop: "10px" }}>
         {tabs.map(item => (
-          <TabBar.Item key={item.key} icon={item.icon} title={item.title} />
+          <TabBar.Item key={item.key} icon={item.icon} title={item.title} selected={item.key === selectedTab} onClick={()=>item.onclick(item.key)}/>
         ))}
       </TabBar>
       <div className="group">
