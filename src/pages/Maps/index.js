@@ -3,7 +3,8 @@ import AMapLoader from '@amap/amap-jsapi-loader';
 import { useEffect } from "react";
 
 export default function Maps() {
-    let map = null;
+    let map = null
+    //使用地址解析器
 
     useEffect(() => {
         window._AMapSecurityConfig = {
@@ -12,14 +13,23 @@ export default function Maps() {
         AMapLoader.load({
             key: "383ba2d81292453f0e88e20efa7c7849", // 申请好的Web端开发者Key，首次调用 load 时必填
             version: "2.0", // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
-            plugins: ["AMap.Scale"], //需要使用的的插件列表，如比例尺'AMap.Scale'，支持添加多个如：['...','...']
-        })
-            .then((AMap) => {
+            plugins: ["AMap.Scale","AMap.ToolBar"], //需要使用的的插件列表，如比例尺'AMap.Scale'，支持添加多个如：['...','...']
+        }).then((AMap) => {
                 map = new AMap.Map("container", {
                     // 设置地图容器id
                     viewMode: "3D", // 是否为3D地图模式
                     zoom: 11, // 初始化地图级别
                     center: [121.42, 31.15], // 初始化地图中心点位置
+                })
+                AMap.plugin('AMap.ToolBar',function(){ 
+                    var toolbar = new AMap.ToolBar({
+                        position: {
+                          top: '550px',
+                          right: '20px'
+                        }
+                    }); //缩放工具条实例化
+                    toolbar.show(); 
+                    map.addControl(toolbar); //添加控件
                 });
             })
             .catch((e) => {
@@ -30,6 +40,7 @@ export default function Maps() {
             map?.destroy();
         };
     }, []);
+    
     return (
         <div>
             <TopTitle title="地图找房"/>
