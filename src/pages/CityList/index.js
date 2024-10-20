@@ -1,4 +1,4 @@
-import { NavBar, Space, Toast } from "antd-mobile"
+import { NavBar, Space, Toast,DotLoading } from "antd-mobile"
 import { SearchOutline, LeftOutline } from 'antd-mobile-icons'
 import { useNavigate } from "react-router-dom"
 import { useEffect, useRef, useState } from "react"
@@ -32,7 +32,6 @@ const formatData = (list) => {
 }
 
 export default function CityLists() {
-
   const ListViews = useRef(null)
   const [hotList, setHotList] = useState([])
   const [city, setCity] = useState("")
@@ -103,7 +102,7 @@ export default function CityLists() {
         城市列表
       </NavBar>
       {/* 可视区域渲染  react-virtualized*/}
-      <ul className="cityIndex" >
+        <ul className="cityIndex" >
         <li className="cityItem">
           {cityIndex.map((item,index)=><span className={item === NIndex? "cityActived cityActive" : "cityActived"} onClick={()=>{
             setFlag(false)
@@ -115,7 +114,7 @@ export default function CityLists() {
           }}>{item === "hot" ? "热" : item}</span>)}
         </li>
       </ul>
-      <AutoSizer>
+      {cityList["z"] ==null || cityList["z"].length == 0?<DotLoading/>:<AutoSizer>
         {({ height, width }) => (
           <List
             ref={ListViews}
@@ -145,8 +144,7 @@ export default function CityLists() {
             }}>
           </List>
         )}
-      </AutoSizer>
-
+      </AutoSizer>}
     </div>
   )
 

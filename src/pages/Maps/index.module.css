@@ -1,0 +1,22 @@
+.marker{
+    height: 50px;
+    width: 50px;
+    background-color: green;
+    border-radius: 50%;
+    opacity: 0.8;
+    z-index: 999;
+}
+
+.city{
+    text-align: center;
+    font-size: 15px;
+    color: white;
+    opacity: 1;
+}
+
+.number{
+    text-align: center;
+    font-size: 15px;
+    color: white;
+    opacity: 1;
+}
