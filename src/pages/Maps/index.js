@@ -34,6 +34,19 @@ export default function Maps() {
                   offset: new AMap.Pixel(-13, -30), //以 icon 的 [center bottom] 为原点
                 })
                 
+
+                const tmarkerContent = `
+                <div class="${styles.marker}">
+                    <div class="${styles.city}">宁波<div>
+                    <div class="${styles.number}">120套</div>
+                </div>`
+                const tposition = new AMap.LngLat(121.59, 29.93) //Marker 经纬度
+                const tmarker = new AMap.Marker({
+                  position: tposition,
+                  content: tmarkerContent, //将 html 传给 content
+                  offset: new AMap.Pixel(-13, -30), //以 icon 的 [center bottom] 为原点
+                })
+
                 AMap.plugin('AMap.ToolBar',function(){ 
                     var toolbar = new AMap.ToolBar({
                         position: {
@@ -44,6 +57,7 @@ export default function Maps() {
                     toolbar.show(); 
                     map.addControl(toolbar); //添加控件
                     map.add(marker);
+                    map.add(tmarker);
                 });
                 
             })

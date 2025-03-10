@@ -38,6 +38,7 @@ export default function CityLists() {
   const dispatch = useDispatch()
   const { CList } = useSelector(state => state.CityList)
   const { cityIndex, cityList } = formatData(CList)
+
   useEffect(() => {
     dispatch(fetchCityList())
     const fetchHotCity = async () => {
@@ -49,10 +50,12 @@ export default function CityLists() {
       setCity(value)
     })
   }, [dispatch, setCity])
+
   cityIndex.unshift('hot')
   cityIndex.unshift('#')
   cityList['hot'] = hotList
   cityList['#'] = [{"label":city}]
+
   const navigate = useNavigate()
   const right = (
     <div style={{ fontSize: 20 }}>
@@ -102,7 +105,8 @@ export default function CityLists() {
         城市列表
       </NavBar>
       {/* 可视区域渲染  react-virtualized*/}
-        <ul className="cityIndex" >
+      {cityList["z"] ==null || cityList["z"].length == 0?<ul></ul>:
+      <ul className="cityIndex" >
         <li className="cityItem">
           {cityIndex.map((item,index)=><span className={item === NIndex? "cityActived cityActive" : "cityActived"} onClick={()=>{
             setFlag(false)
@@ -113,8 +117,9 @@ export default function CityLists() {
             },500)
           }}>{item === "hot" ? "热" : item}</span>)}
         </li>
-      </ul>
-      {cityList["z"] ==null || cityList["z"].length == 0?<DotLoading/>:<AutoSizer>
+      </ul>}
+      {cityList["z"] ==null || cityList["z"].length == 0?<DotLoading/>
+      :<AutoSizer>
         {({ height, width }) => (
           <List
             ref={ListViews}
